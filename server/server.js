@@ -9,16 +9,17 @@ const app = express();
 const httpServer = createServer(app);
 
 // CORS configuration
+const corsOrigin = process.env.CORS_ORIGIN || '*';
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
+  origin: corsOrigin,
+  credentials: false
 }));
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: corsOrigin,
     methods: ['GET', 'POST'],
-    credentials: true
+    credentials: false
   }
 });
 
@@ -106,7 +107,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

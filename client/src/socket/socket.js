@@ -7,7 +7,7 @@ let socket = null;
  */
 export const initSocket = () => {
   if (!socket) {
-    socket = io('http://localhost:3001', {
+    socket = io('https://collaborative-drawing-canvas-server-production.up.railway.app', {
       transports: ['websocket', 'polling'],
       reconnection: true,
       reconnectionDelay: 1000,
