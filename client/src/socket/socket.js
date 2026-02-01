@@ -2,9 +2,6 @@ import { io } from 'socket.io-client';
 
 let socket = null;
 
-/**
- * Initialize Socket.io connection
- */
 export const initSocket = () => {
   if (!socket) {
     socket = io('https://collaborative-drawing-canvas-server-production.up.railway.app', {

@@ -2,10 +2,6 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useCanvasDrawing } from '../hooks/useCanvasDrawing.js';
 import { getSocket } from '../socket/socket.js';
 
-/**
- * CanvasBoard Component
- * React orchestrates, canvas does the drawing
- */
 export const CanvasBoard = () => {
   const [username, setUsername] = useState('');
   const [userId, setUserId] = useState(null);
@@ -20,7 +16,7 @@ export const CanvasBoard = () => {
   const usernameRef = useRef(username);
   const usernameForEmitRef = useRef('');
   const lastCursorEmitRef = useRef(0);
-  const CURSOR_THROTTLE_MS = 80; // Throttle cursor updates to reduce lag
+  const CURSOR_THROTTLE_MS = 80;
   strokesRef.current = strokes;
   userIdRef.current = userId;
   usernameRef.current = username;
@@ -159,11 +155,8 @@ export const CanvasBoard = () => {
   }, [userId]);
 
 
-  // Redo: enable if any stroke in redo stack for this user (sent from server as not visible, so we track locally)
-  // For now, always enable Redo button (since redo stack is not tracked on client)
-  // For a more robust solution, you could emit a 'canRedo' event from server or track locally.
   const canUndo = strokes.some(stroke => stroke.userId === userId);
-  const [canRedo, setCanRedo] = useState(true); // Always enabled for now
+  const [canRedo, setCanRedo] = useState(true);
 
   const handleUsernameSubmit = (e) => {
     e.preventDefault();

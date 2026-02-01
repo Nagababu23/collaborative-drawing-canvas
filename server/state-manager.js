@@ -1,19 +1,9 @@
-/**
- * Global State Manager
- * Maintains the single source of truth for all strokes in a room
- */
-
 export class StateManager {
   constructor() {
-    // roomId -> strokes[]
     this.rooms = new Map();
-    // roomId -> redoStack[]
     this.redoStacks = new Map();
   }
 
-  /**
-   * Initialize a room with empty stroke history
-   */
   initRoom(roomId) {
     if (!this.rooms.has(roomId)) {
       this.rooms.set(roomId, []);
@@ -23,18 +13,12 @@ export class StateManager {
     }
   }
 
-  /** Max strokes per room to prevent lag after long use */
   static MAX_STROKES = 500;
 
-  /**
-   * Add a new stroke to the room's history
-   * Keeps only the last MAX_STROKES to avoid unbounded growth
-   */
   addStroke(roomId, stroke) {
     this.initRoom(roomId);
     const strokes = this.rooms.get(roomId);
     strokes.push(stroke);
-    // Clear redo stack on new stroke
     this.redoStacks.set(roomId, []);
     while (strokes.length > StateManager.MAX_STROKES) {
       strokes.shift();
